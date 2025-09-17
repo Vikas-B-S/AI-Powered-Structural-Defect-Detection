@@ -1,0 +1,6 @@
+streamlit
+google-generativeai
+Pillow
+fpdf
+markdown2
+xhtml2pdf
