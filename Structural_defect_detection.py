@@ -5,6 +5,8 @@ import os
 import datetime as dt
 from fpdf import FPDF
 import io
+import markdown2
+from xhtml2pdf import pisa
 
 #configure the model
 key=os.getenv('GOOGLE_API_KEY')
@@ -47,7 +49,7 @@ prep_for=st.text_input('Report Prepared for:',None)
 
 prompt = f'''
 You are an expert structural engineer and AI assistant. The user has provided an image of a structure.
-Your task is to generate a comprehensive **structural defect report** in **Word format**without any instructions, based on the image.
+Your task is to generate a comprehensive report based on the image.
 
 The report should include:
 
@@ -86,20 +88,22 @@ if st.button('Generate Report'):
             result=response.text
             st.write(result)
 
-        pdf = FPDF()
-        pdf.add_page()
-        pdf.set_auto_page_break(auto=True, margin=15)
-        pdf.set_font("Arial", size=12)
-        result=result.replace('₹','Rupees')
-        pdf.multi_cell(0, 10, txt=result)
+            result = result.replace("₹", "Rupees")
 
-        pdf_bytes = pdf.output(dest='S').encode('latin1')
-        pdf_buffer = io.BytesIO(pdf_bytes)
+        # Convert Markdown text to HTML
+        html = markdown2.markdown(result)
 
+        # Convert HTML to PDF
+        pdf_buffer = io.BytesIO()
+        pisa.CreatePDF(html, dest=pdf_buffer)
 
-        # Download button
+        # Reset buffer position for Streamlit
+        pdf_buffer.seek(0)
+
+        # Streamlit download button
         st.download_button(
-        label='Download Report as PDF',
+        label="Download Report as PDF",
         data=pdf_buffer,
-        file_name='Structural_Defect_Report.pdf',
-        mime='application/pdf')
+        file_name="Structural_Defect_Report.pdf",
+        mime="application/pdf"
+        )
