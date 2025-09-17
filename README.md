@@ -1,4 +1,4 @@
-# 🏗️ AI-Powered Structural Defect Detection & Reporting System  
+# AI-Powered Structural Defect Detection & Reporting System  
 
 ## 📖 Overview  
 This project is an AI-assisted application that analyzes structural images (such as beams, columns, slabs, and walls) to identify potential defects and generate a **professional engineering report**.  
