@@ -22,62 +22,64 @@ if uploaded_image:
     st.sidebar.image(image)
 
 # create main page
-st.title('STRUCTURAL DEFECTS: :grey[AI assisted structural defect identifier in construction buisness]')
+st.markdown(
+    "<h1 style='text-align: center; color:#2C3E50;'>AI-Powered Structural Defect Detection & Automated Reporting</h1>",
+    unsafe_allow_html=True
+)
 
-# Tips
 tips = '''
-To use this AI-assisted structural defect identifier application, follow these steps:
+### 📌 How to Use This Application
 
-1. Upload a clear image of the structure you want to analyze.
-2. Fill in the report details: title, prepared by, and prepared for.
-3. Click the "Generate Report" button to analyze the image and produce a detailed structural defect report.
-4. Once generated, review the report on-screen and download it for documentation.
+1. **Upload an Image**: Provide a clear photo of the structural element (e.g., beam, column, slab, wall).  
+2. **Enter Report Details**: Add the report title, your name, and the recipient’s name.  
+3. **Generate Report**: Click **"Generate Report"** to let the AI analyze the image and prepare a detailed engineering report.  
+4. **Review & Download**: The report will be displayed on screen and can be downloaded as a PDF for project documentation.  
 
-The report will provide:
-- Classification of structural defects (e.g., cracking, corrosion, honeycombing, etc.)
-- Severity assessment (low, medium, high) and avoidable vs inevitable defects
-- Estimated time before permanent damage occurs
-- Short-term and long-term remediation solutions with cost and time estimates
-- Precautionary measures to prevent future defects
+### 📝 What the Report Covers
+- Types of defects (e.g., cracks, corrosion, spalling, honeycombing, etc.)  
+- Severity assessment: **Low / Medium / High**  
+- Classification: **Avoidable vs. Inevitable** defects  
+- Estimated time before critical structural damage  
+- Short-term and long-term repair strategies with **time & cost estimates**  
+- Preventive recommendations to avoid recurrence  
 '''
 
-st.write(tips)
+st.markdown(tips)
+
 rep_title=st.text_input('Report Title:',None)
 prep_by=st.text_input('Report Prepared By:',None)
 prep_for=st.text_input('Report Prepared for:',None)
 
 
-prompt = f'''
-You are an expert structural engineer and AI assistant. The user has provided an image of a structure.
-Your task is to generate a comprehensive report based on the image.
+prompt = f"""
+You are a professional structural engineer and AI assistant. The user has uploaded an image of a structural element.  
+Your task is to generate a **clear, well-structured, and professional report** based on the image.
 
-The report should include:
+### Report Requirements
 
-1. **Report Details**:
-   - Title: {rep_title}
-   - Prepared By: {prep_by}
-   - Prepared For: {prep_for}
-   - Date: {dt.datetime.now().date()}
+**1. Report Details**
+- Title: {rep_title}
+- Prepared By: {prep_by}
+- Prepared For: {prep_for}
+- Date: {dt.datetime.now().date()}
 
-2. **Defect Identification**:
-   - Identify all defects in the image (e.g., cracking, corrosion, honeycombing, spalling, etc.)
-   - Classify each defect separately
-   - Assess severity (Low / Medium / High)
-   - Indicate if the defect is avoidable or inevitable
-   - Estimate time before permanent structural damage occurs
+**2. Defect Identification**
+- Detect and describe all visible defects (cracking, corrosion, honeycombing, spalling, surface wear, etc.)
+- Classify each defect with a clear name and type
+- Assess severity (**Low / Medium / High**)
+- State whether the defect is **avoidable or inevitable**
+- Provide an **estimated timeline** before permanent damage occurs
 
-3. **Solutions and Recommendations**:
-   - Short-term solution with estimated cost and implementation time
-   - Long-term solution with estimated cost and implementation time
-   - Precautionary measures to prevent recurrence
+**3. Solutions & Recommendations**
+- **Short-Term Solutions**: practical fixes with estimated **cost & implementation time**
+- **Long-Term Solutions**: durable remediation with estimated **cost & implementation time**
+- **Preventive Measures**: clear guidelines to minimize recurrence
 
-4. **Formatting Requirements**:
-   - Use bullet points for clarity
-   - Include tables where appropriate for easy understanding
-   - Ensure the report is concise and does not exceed 3 pages
-
-Generate a professional, actionable report suitable for construction project documentation.
-'''
+**4. Formatting Guidelines**
+- Use **headings, bullet points, and tables** where appropriate
+- Keep report **professional and easy to follow**
+- Ensure it is concise (≤ 3 pages) but sufficiently detailed for construction documentation
+"""
 
 if st.button('Generate Report'):
     if uploaded_image is None:
